@@ -1,0 +1,35 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Common dimens -->
+    <dimen name="common_padding">10dp</dimen>
+    <dimen name="common_margin">10dp</dimen>
+    <dimen name="common_item_margin">5dp</dimen>
+    <dimen name="common_recycle_padding">5dp</dimen>
+    <dimen name="common_guideline_margin">60dp</dimen>
+
+    <!-- Common card dimens -->
+    <dimen name="card_default_elevation">2dp</dimen>
+    <dimen name="card_max_elevation">8dp</dimen>
+    <dimen name="card_z_value">6dp</dimen>
+    <dimen name="card_corner_radius">5dp</dimen>
+
+    <!-- Item dimens for favourite one -->
+    <dimen name="favourite_divider_width">25dp</dimen>
+    <dimen name="favourite_divider_height">1dp</dimen>
+    <dimen name="favourite_bottom_border_height">2dp</dimen>
+
+    <!-- Card dimens for the item_get_quote -->
+    <dimen name="get_quote_card_width">240dp</dimen>
+    <dimen name="get_quote_card_height">290dp</dimen>
+    <dimen name="get_quote_card_height_land">200dp</dimen>
+    <dimen name="get_quote_author_section_height">60dp</dimen>
+    <dimen name="get_quote_choice_margin">30dp</dimen>
+    <dimen name="get_quote_choice_size">64dp</dimen>
+
+    <!-- Share button -->
+    <dimen name="btn_share_margin">5dp</dimen>
+
+</resources>

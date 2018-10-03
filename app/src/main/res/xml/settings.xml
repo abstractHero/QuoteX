@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/settings_category_notifications">
+
+        <SwitchPreference
+            android:title="@string/notification_title_alert"
+            android:key="@string/settings_key_alert"
+            android:defaultValue="true"
+            android:summary="@string/notification_alert_summary"
+            android:icon="@drawable/ic_notifications" />
+
+        <ListPreference
+            android:title="@string/notification_title_interval"
+            android:key="@string/settings_key_interval"
+            android:dependency="@string/settings_key_alert"
+            android:defaultValue="3600000"
+            android:summary="%s"
+            android:icon="@drawable/ic_schedule"
+            android:entries="@array/settings_interval_entries"
+            android:entryValues="@array/settings_interval_values"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null" />
+
+        <Preference
+            android:title="@string/notification_title_ringtone"
+            android:key="@string/settings_key_sound"
+            android:dependency="@string/settings_key_alert"
+            android:icon="@drawable/ic_music_note"
+            android:showSilent="true" />
+
+        <SwitchPreference
+            android:title="@string/notification_title_vibration"
+            android:key="@string/settings_key_vibration"
+            android:dependency="@string/settings_key_alert"
+            android:icon="@drawable/ic_vibration"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_category_language">
+
+        <ListPreference
+            android:title="@string/notification_title_quote_language"
+            android:key="@string/settings_key_quote_language"
+            android:defaultValue="en"
+            android:summary="%s"
+            android:icon="@drawable/ic_language"
+            android:entries="@array/settings_language_entries"
+            android:entryValues="@array/settings_language_values"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_category_others">
+
+        <Preference
+            android:title="@string/notification_title_git"
+            android:summary="@string/notification_git_summary"
+            android:icon="@drawable/ic_code">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/settings_git_url" />
+
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

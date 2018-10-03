@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Max and min values for the number picker -->
+    <integer name="picker_min">1</integer>
+    <integer name="picker_max">10</integer>
+    <integer name="picker_current">5</integer>
+
+</resources>

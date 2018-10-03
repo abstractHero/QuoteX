@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Major colors -->
+    <color name="colorPrimary">#42A5F5</color>
+    <color name="colorPrimaryDark">#0077C2</color>
+    <color name="colorAccent">@color/tab_settings</color>
+
+    <!-- Common colors -->
+    <color name="common_white">@android:color/white</color>
+    <color name="common_black">@android:color/black</color>
+
+    <!-- Splash screen -->
+    <color name="splash_top">#26A0DA</color>
+    <color name="splash_bottom">#1D2B64</color>
+
+    <!-- Recycle view -->
+    <color name="recycle_background">#F2F2F2</color>
+
+    <!-- Tabs -->
+    <color name="tab_favourite">#D66478</color>
+    <color name="tab_get_quote">#6078EA</color>
+    <color name="tab_settings">#3BB2B8</color>
+    <color name="tab_inactive">#343434</color>
+
+    <array name="tab_colors">
+        <item name="tab_favourite">@color/tab_favourite</item>
+        <item name="tab_get_quote">@color/tab_get_quote</item>
+        <item name="tab_settings">@color/tab_settings</item>
+    </array>
+
+    <!-- Tab favourite -->
+    <color name="favourite_background">@color/common_white</color>
+    <color name="favourite_text">@color/common_black</color>
+    <color name="favourite_item_quote_delete_background">#FA315B</color>
+
+    <!-- Tab get a quote -->
+    <color name="get_quote_quote_text">@color/common_white</color>
+    <color name="get_quote_quote_author">@color/common_black</color>
+    <color name="get_quote_error">#E5603C</color>
+
+    <!-- Get a quote fragment -->
+    <color name="get_quote_card_background">#355C7D</color>
+    <color name="get_quote_process">#FFDE03</color>
+
+</resources>

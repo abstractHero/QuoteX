@@ -1,0 +1,79 @@
+<resources>
+
+    <string name="app_name">QuoteX</string>
+
+    <!-- Default value -->
+    <string name="default_author_name">Unknown</string>
+    <string name="default_quote_language" translatable="false">en</string>
+
+    <!-- Tabs' names -->
+    <string name="tab_favourite">Favorite</string>
+    <string name="tab_get_quote">Get a quote</string>
+    <string name="tab_settings">Settings</string>
+
+    <!-- Content description -->
+    <string name="content_description_share">Share button</string>
+    <string name="content_description_delete">Delete icon</string>
+    <string name="content_description_like_image">Like image</string>
+    <string name="content_description_error_image">Error image</string>
+    <string name="content_description_empty_image">Image represents an emptiness</string>
+    <string name="content_description_dislike_image">Dislike image</string>
+
+    <!-- Hints -->
+    <string name="hint_search">Something</string>
+
+    <!-- Share -->
+    <string name="share_title">Share the quote via</string>
+
+    <!-- UI elements -->
+    <string name="btn_refresh">Try again</string>
+    <string name="error_connection">No connection</string>
+    <string name="error">An error has been occurred</string>
+    <string name="empty">You have not added any quote yet</string>
+
+    <!-- Settings -->
+    <string name="settings_category_notifications">Notifications</string>
+    <string name="notification_title_alert">Alert</string>
+    <string name="notification_title_interval">Interval</string>
+    <string name="notification_title_ringtone">Ringtone</string>
+    <string name="notification_title_vibration">Vibration</string>
+    <string name="settings_category_others">Others</string>
+    <string name="notification_title_git">Source code on GitHub</string>
+    <string name="settings_category_language">Language</string>
+    <string name="notification_title_quote_language">Quote language</string>
+
+    <!--    Summary -->
+    <string name="notification_alert_summary">Allow to get a quote in chosen interval</string>
+    <string name="notification_git_summary">Visit the project\'s GitHub page</string>
+
+    <!--    Preference keys -->
+    <string name="settings_key_alert" translatable="false">key_alert</string>
+    <string name="settings_key_interval" translatable="false">key_interval</string>
+    <string name="settings_key_sound" translatable="false">key_sound</string>
+    <string name="settings_key_vibration" translatable="false">key_vibration</string>
+    <string name="settings_key_quote_language" translatable="false">key_quote_language</string>
+
+    <!--    Urls -->
+    <string name="settings_git_url">https://github.com/abstractHero/QuoteX</string>
+
+    <!-- For using in other resources -->
+    <string name="res_minutes">minutes</string>
+    <string name="res_hour">hour</string>
+    <string name="res_hours">hours</string>
+
+    <!-- Notification channels -->
+    <string name="notification_channel_quotes">Quote notification channel</string>
+    <string name="notification_channel_quotes_descr">Allow the app to push if it turns on.</string>
+
+    <!-- Notification itself -->
+    <string name="push_title">You\'ve gotten a new quote!</string>
+    <string name="push_collapsed_subtitle">Expand the notification to see the quote</string>
+
+    <!--    Action buttons -->
+    <string name="push_action_like">Add to favorite</string>
+
+    <!-- Menu -->
+    <string name="menu_undo">Undo</string>
+    <string name="menu_search">Search</string>
+
+</resources>

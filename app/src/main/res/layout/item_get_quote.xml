@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="quote"
+            type="com.phantasmdragon.quote.dataLayer.json.Quote" />
+
+        <variable
+            name="clickHandler"
+            type="com.phantasmdragon.quote.callbackLayer.handler.ClickHandler" />
+
+        <variable
+            name="colorUtils"
+            type="com.phantasmdragon.quote.utilsLevel.ColorUtils" />
+
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="@dimen/get_quote_card_width"
+        android:layout_height="@dimen/get_quote_card_height"
+        app:cardCornerRadius="@dimen/card_corner_radius">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/common_white">
+
+            <View
+                android:id="@+id/itemGetQuote_background"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@{colorUtils.getRandomMaterialColor()}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/itemGetQuote_quote"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_padding"
+                android:text="@{quote.quoteText}"
+                android:textSize="14sp"
+                android:textColor="@color/get_quote_quote_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/guideline" />
+
+            <TextView
+                android:id="@+id/itemGetQuote_author"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="@dimen/common_padding"
+                android:textSize="14sp"
+                android:textColor="@color/get_quote_quote_author"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/itemGetQuote_btnShare"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideline"
+                author="@{quote.quoteAuthor}"
+                defaultAuthor="@{@string/default_author_name}" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/itemGetQuote_btnShare"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/btn_share_margin"
+                android:contentDescription="@string/content_description_share"
+                android:onClick="@{() -> clickHandler.onShareClick(quote)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideline"
+                app:srcCompat="@drawable/ic_share" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="@dimen/get_quote_author_section_height" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+</layout>

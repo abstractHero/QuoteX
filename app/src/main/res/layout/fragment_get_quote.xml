@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.phantasmdragon.quote.callbackLayer.viewModel.GetQuoteViewModel" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="?android:attr/actionBarSize"
+        tools:context=".presentationLayer.acitvity.MainActivity">
+
+        <ImageView
+            android:id="@+id/fragGetQuote_like"
+            android:layout_width="@dimen/get_quote_choice_size"
+            android:layout_height="@dimen/get_quote_choice_size"
+            android:layout_marginStart="@dimen/get_quote_choice_margin"
+            android:layout_marginTop="@dimen/get_quote_choice_margin"
+            android:scaleType="fitXY"
+            android:alpha="0"
+            android:contentDescription="@string/content_description_like_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/swipe_like"
+            changeLikesAlpha="@{safeUnbox(viewModel.ratio)}" />
+
+        <ImageView
+            android:id="@+id/fragGetQuote_dislike"
+            android:layout_width="@dimen/get_quote_choice_size"
+            android:layout_height="@dimen/get_quote_choice_size"
+            android:layout_marginTop="@dimen/get_quote_choice_margin"
+            android:layout_marginEnd="@dimen/get_quote_choice_margin"
+            android:scaleType="fitXY"
+            android:alpha="0"
+            android:contentDescription="@string/content_description_dislike_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/swipe_dislike"
+            changeDislikesAlpha="@{safeUnbox(viewModel.ratio)}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/common_margin"
+            android:textSize="20sp"
+            android:textColor="@color/get_quote_error"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fragGetQuote_image"
+            app:layout_constraintRight_toRightOf="parent"
+            queryState="@{viewModel.queryState}"
+            setExplanationIfError="@{viewModel.resources}" />
+
+        <ImageView
+            android:id="@+id/fragGetQuote_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/content_description_error_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/fragGetQuote_rightGuideline"
+            app:layout_constraintStart_toStartOf="@id/fragGetQuote_leftGuideline"
+            app:layout_constraintTop_toTopOf="parent"
+            showImageIfError="@{viewModel.queryState}" />
+
+        <android.support.design.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_margin"
+            android:text="@string/btn_refresh"
+            android:textColor="@color/get_quote_error"
+            android:onClick="@{() -> viewModel.fetchQuote()}"
+            android:theme="@style/RefreshButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragGetQuote_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:icon="@drawable/ic_refresh"
+            app:iconTint="@color/get_quote_error"
+            showIfError="@{viewModel.queryState}" />
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:indicatorColor="@color/get_quote_process"
+            app:indicatorName="PacmanIndicator"
+            showIfProcess="@{viewModel.queryState}"
+            style="@style/AVLoadingIndicatorView.Large" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragGetQuote_recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/fragGetQuote_leftGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/common_guideline_margin" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/fragGetQuote_rightGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/common_guideline_margin" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>
