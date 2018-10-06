@@ -49,4 +49,9 @@ class GetQuoteViewModel @Inject constructor(private val quoteRepository: QuoteRe
         quoteRepository.getQuote()
     }
 
+    override fun onCleared() {
+        quoteRepository.dispose()
+        super.onCleared()
+    }
+
 }

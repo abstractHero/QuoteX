@@ -24,10 +24,11 @@ import androidx.work.Worker.Result.SUCCESS
 import androidx.work.WorkerParameters
 import com.phantasmdragon.quote.daggerLevel.custom.AndroidWorkerInjection
 import com.phantasmdragon.quote.dataLayer.json.Quote
-import com.phantasmdragon.quote.networkLayer.repository.QuoteServiceRepository
+import com.phantasmdragon.quote.networkLayer.repository.QuoteWorkerRepository
 import com.phantasmdragon.quote.utilsLevel.Constant
 import com.phantasmdragon.quote.utilsLevel.NotificationHelper
 import com.phantasmdragon.quote.utilsLevel.getCorrectedAuthor
+import io.reactivex.disposables.Disposables
 import javax.inject.Inject
 
 class NotificationWorker(context: Context,
@@ -39,14 +40,14 @@ class NotificationWorker(context: Context,
     }
 
     @Inject lateinit var notificationHelper: NotificationHelper
-    @Inject lateinit var quoteServiceRepository: QuoteServiceRepository
+    @Inject lateinit var quoteWorkerRepository: QuoteWorkerRepository
     @Inject lateinit var res: Resources
 
     private lateinit var queryResult: Result
 
     override fun doWork(): Result {
         AndroidWorkerInjection.inject(this)
-        quoteServiceRepository.getQuote()
+        quoteWorkerRepository.getQuote()
 
         return getOperationResult()
     }
@@ -64,10 +65,10 @@ class NotificationWorker(context: Context,
      */
     private fun getOperationResult(): Result {
 
-        val onProperyChangedListener = quoteServiceRepository.queryState.addOnPropertyChangedListener {
+        val onProperyChangedListener = quoteWorkerRepository.queryState.addOnPropertyChangedListener {
             if (it.get() == Constant.QueryState.DONE) {
 
-                val quote = quoteServiceRepository.quote.apply {
+                val quote = quoteWorkerRepository.quote.apply {
                     this?.quoteAuthor = this?.getCorrectedAuthor(res)
                 }
 
@@ -81,7 +82,8 @@ class NotificationWorker(context: Context,
 
         while (!this::queryResult.isInitialized) {}
 
-        quoteServiceRepository.queryState.removeOnPropertyChangedCallback(onProperyChangedListener)
+        onProperyChangedListener.dispose()
+        quoteWorkerRepository.dispose()
 
         return queryResult
     }
@@ -91,18 +93,7 @@ class NotificationWorker(context: Context,
     }
 
     /**
-     * If you use the RxJava, you could instead of returning the callback, return a disposable;
-     *
-     * like that:
-     *
-     * .also {
-     *      addOnPropertyChangedCallback(it)
-     * }.let {
-     *      Disposables.fromAction { removeOnPropertyChangedCallback(it) }
-     * }
-     *
-     * This way you can store in can be stored together with other Disposables in CompositeDisposable
-     * and the class using this does not need to know any details about how to unregister.
+     * I know it's like too much for just a simple observer, but let's say it's created for studying purposes :D
      */
     private inline fun <reified T: Observable> T.addOnPropertyChangedListener(crossinline callback: (T) -> Unit)
             = object : Observable.OnPropertyChangedCallback() {
@@ -111,6 +102,8 @@ class NotificationWorker(context: Context,
         }
     }.also {
         addOnPropertyChangedCallback(it)
+    }.let {
+        Disposables.fromAction { removeOnPropertyChangedCallback(it) }
     }
 
 }

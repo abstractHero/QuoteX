@@ -23,7 +23,7 @@ import com.phantasmdragon.quote.dataLayer.database.dao.QuoteDao
 import com.phantasmdragon.quote.dataLayer.repository.DatabaseQuoteRepository
 import com.phantasmdragon.quote.networkLayer.api.QuoteApi
 import com.phantasmdragon.quote.networkLayer.repository.QuoteRepository
-import com.phantasmdragon.quote.networkLayer.repository.QuoteServiceRepository
+import com.phantasmdragon.quote.networkLayer.repository.QuoteWorkerRepository
 import dagger.Module
 import dagger.Provides
 
@@ -44,7 +44,7 @@ class RepositoryModule {
     fun provideQuoteServiceRepository(quoteApi: QuoteApi,
                                       resources: Resources,
                                       sharedPreferences: SharedPreferences)
-            = QuoteServiceRepository(quoteApi,
+            = QuoteWorkerRepository(quoteApi,
                                      resources,
                                      sharedPreferences)
 

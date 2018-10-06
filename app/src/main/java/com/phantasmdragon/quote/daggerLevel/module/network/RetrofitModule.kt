@@ -22,6 +22,7 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
@@ -33,12 +34,15 @@ class RetrofitModule {
 
     @Provides
     @ApplicationScope
-    fun provideRetrofitInterface(okHttpClient: OkHttpClient, converterFactory: MoshiConverterFactory): Retrofit {
+    fun provideRetrofitInterface(okHttpClient: OkHttpClient,
+                                 converterFactory: MoshiConverterFactory,
+                                 rxConverter: RxJava2CallAdapterFactory): Retrofit {
 
         return Retrofit.Builder()
                        .baseUrl(Constant.BASE_URL)
                        .client(okHttpClient)
                        .addConverterFactory(converterFactory)
+                       .addCallAdapterFactory(rxConverter)
                        .build()
 
     }
@@ -46,5 +50,9 @@ class RetrofitModule {
     @Provides
     @ApplicationScope
     fun provideConverter(): MoshiConverterFactory = MoshiConverterFactory.create()
+
+    @Provides
+    @ApplicationScope
+    fun provideRxConverter(): RxJava2CallAdapterFactory = RxJava2CallAdapterFactory.create()
 
 }

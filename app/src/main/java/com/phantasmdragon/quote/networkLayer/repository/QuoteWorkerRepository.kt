@@ -23,9 +23,9 @@ import com.phantasmdragon.quote.networkLayer.api.QuoteApi
 import com.phantasmdragon.quote.utilsLevel.Constant
 import javax.inject.Inject
 
-class QuoteServiceRepository @Inject constructor(quoteApi: QuoteApi,
-                                                 resources: Resources,
-                                                 sharedPreferences: SharedPreferences)
+class QuoteWorkerRepository @Inject constructor(quoteApi: QuoteApi,
+                                                resources: Resources,
+                                                sharedPreferences: SharedPreferences)
     : BaseFetchQuoteRepository(quoteApi,
                                resources,
                                sharedPreferences) {

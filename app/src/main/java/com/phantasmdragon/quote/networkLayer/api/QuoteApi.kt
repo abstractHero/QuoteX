@@ -17,13 +17,13 @@ package com.phantasmdragon.quote.networkLayer.api
 
 import com.phantasmdragon.quote.dataLayer.json.Quote
 import com.phantasmdragon.quote.utilsLevel.Constant
-import retrofit2.Call
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface QuoteApi {
 
     @GET(Constant.DEFAULT_URL_PARAMETRES)
-    fun getQuote(@Query("lang") lang: String): Call<Quote>
+    fun getQuote(@Query("lang") lang: String): Single<Quote>
 
 }

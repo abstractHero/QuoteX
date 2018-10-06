@@ -23,9 +23,9 @@ import com.phantasmdragon.quote.dataLayer.json.Quote
 import com.phantasmdragon.quote.networkLayer.api.QuoteApi
 import com.phantasmdragon.quote.networkLayer.exception.NoNetworkException
 import com.phantasmdragon.quote.utilsLevel.Constant
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 
 abstract class BaseFetchQuoteRepository(private val quoteApi: QuoteApi,
                                         private val resources: Resources,
@@ -36,22 +36,22 @@ abstract class BaseFetchQuoteRepository(private val quoteApi: QuoteApi,
     private val language: String
         get() = sharedPreferences.getString(resources.getString(R.string.settings_key_quote_language), resources.getString(R.string.default_quote_language))
 
+    private var disposable: Disposable? = null
+
     fun getQuote() {
         queryState.set(Constant.QueryState.PROCESS)
 
-        quoteApi.getQuote(language).enqueue(quoteHandler)
-    }
-
-    private val quoteHandler = object : Callback<Quote> {
-
-        override fun onResponse(call: Call<Quote>?, response: Response<Quote>?) {
-            handleQuote(response?.body())
-            queryState.set(Constant.QueryState.DONE)
-        }
-
-        override fun onFailure(call: Call<Quote>?, throwable: Throwable?) {
-            postError(throwable)
-        }
+        disposable = quoteApi.getQuote(language)
+                             .subscribeOn(Schedulers.io())
+                             .subscribeBy(
+                                     onSuccess = {
+                                         handleQuote(it)
+                                         queryState.set(Constant.QueryState.DONE)
+                                     },
+                                     onError = {
+                                         postError(it)
+                                     }
+                             )
     }
 
     abstract fun handleQuote(quote: Quote?)
@@ -59,6 +59,10 @@ abstract class BaseFetchQuoteRepository(private val quoteApi: QuoteApi,
     private fun postError(throwable: Throwable?) {
         queryState.set(if (throwable is NoNetworkException) Constant.QueryState.NO_NETWORK
                        else Constant.QueryState.ERROR)
+    }
+
+    fun dispose() {
+        disposable?.dispose()
     }
 
 }
