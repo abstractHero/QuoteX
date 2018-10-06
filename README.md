@@ -24,6 +24,7 @@ Pictures:
   * [Heart](https://www.iconfinder.com/icons/2246820/heart_instagram_like_notification_icon)
   * [X icon](https://www.iconfinder.com/icons/1553096/alphabet_letter_letters_red_x_icon)
   * [SpaceX icons](https://www.iconfinder.com/iconsets/free-falcon-heavy-demo-mission-1)
+  * [Space Flat](https://www.iconfinder.com/iconsets/space-flat-galaxy-radio)
 
 # License
 
