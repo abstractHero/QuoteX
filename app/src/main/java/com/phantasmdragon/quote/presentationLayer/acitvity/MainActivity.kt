@@ -40,6 +40,10 @@ class MainActivity: DaggerAppCompatActivity(),
                     OnLikeListener,
                     MarkAsDeletedCallback {
 
+    companion object {
+        const val KEY_UNDO_BADGE = "key_undo_badge"
+    }
+
     @Inject lateinit var tabColors: IntArray
     @Inject lateinit var bottomNavAdapter: AHBottomNavigationAdapter
     @Inject lateinit var viewPagerAdapter: FragmentViewPagerAdapter
@@ -157,15 +161,6 @@ class MainActivity: DaggerAppCompatActivity(),
         mainViewModel.unmarkDeleted(mainViewModel.undoBadgeCount--)
 
         invalidateOptionsMenu()
-    }
-
-    /**
-     * All quotes marked as deleted are being deleted from the database when the app is shut down.
-     */
-    override fun onDestroy() {
-        mainViewModel.deleteAllMarked()
-
-        super.onDestroy()
     }
 
 }

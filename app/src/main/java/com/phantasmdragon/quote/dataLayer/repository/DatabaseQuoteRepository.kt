@@ -45,10 +45,6 @@ class DatabaseQuoteRepository @Inject constructor(private val quoteDao: QuoteDao
                                     quote.quoteText))
     }
 
-    fun deleteAllMarked() = databaseThread {
-        quoteDao.deleteAllMarked()
-    }
-
     fun markAsDeleted(id: Long?, deletedOrder: Int) = databaseThread {
         quoteDao.markAsDeleted(id, deletedOrder)
     }

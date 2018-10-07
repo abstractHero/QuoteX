@@ -79,3 +79,13 @@ fun Quote.getCorrectedAuthor(resources: Resources) = if (this.quoteAuthor.isNull
  * It's just a short way to get a boolean value without checks.
  */
 fun <T : SharedPreferences?> T.getSafeBoolean(key: String?) = this?.getBoolean(key, false) ?: false
+
+/**
+ * Almost identical function from android-ktx extensions.
+ * See: https://github.com/android/android-ktx/blob/89ee2e1cde1e1b0226ed944b9abd55cee0f9b9d4/src/main/java/androidx/core/content/SharedPreferences.kt
+ */
+inline fun SharedPreferences.edit(action: SharedPreferences.Editor.() -> Unit) {
+    val editor = edit()
+    action(editor)
+    editor.apply()
+}

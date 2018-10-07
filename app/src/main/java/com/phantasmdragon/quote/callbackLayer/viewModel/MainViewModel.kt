@@ -16,16 +16,27 @@
 package com.phantasmdragon.quote.callbackLayer.viewModel
 
 import android.arch.lifecycle.ViewModel
+import android.content.SharedPreferences
 import com.phantasmdragon.quote.dataLayer.json.Quote
 import com.phantasmdragon.quote.dataLayer.repository.DatabaseQuoteRepository
+import com.phantasmdragon.quote.presentationLayer.acitvity.MainActivity
+import com.phantasmdragon.quote.utilsLevel.edit
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val databaseQuoteRepository: DatabaseQuoteRepository)
+class MainViewModel @Inject constructor(private val databaseQuoteRepository: DatabaseQuoteRepository,
+                                        private val sharedPreferences: SharedPreferences)
     : ViewModel() {
 
     var currentPosition = -1
     var badgeCount = 0
+
+    /**
+     * The value is stored in the file.
+     * Therefore, it's possible to bring quotes back at any time.
+     */
     var undoBadgeCount = 0
+        set(value) = sharedPreferences.edit { putInt(MainActivity.KEY_UNDO_BADGE, value) }
+        get() = if (field == 0) sharedPreferences.getInt(MainActivity.KEY_UNDO_BADGE, 0) else field
 
     fun insert(quote: Quote) {
         databaseQuoteRepository.insert(quote)
@@ -37,10 +48,6 @@ class MainViewModel @Inject constructor(private val databaseQuoteRepository: Dat
 
     fun unmarkDeleted(deletedOrder: Int) {
         databaseQuoteRepository.unmarkDeleted(deletedOrder)
-    }
-
-    fun deleteAllMarked() {
-        databaseQuoteRepository.deleteAllMarked()
     }
 
 }

@@ -35,10 +35,6 @@ interface QuoteDao {
     @Insert(onConflict = REPLACE)
     fun insert(quoteEntity: QuoteEntity): Long
 
-    @Query("""DELETE FROM Quotes
-                    WHERE isDeleted = 1""")
-    fun deleteAllMarked()
-
     @Query("""UPDATE Quotes
                     SET isDeleted = 1, deletedOrder = :deletedOrder
                     WHERE id = :id""")
