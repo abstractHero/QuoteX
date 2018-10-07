@@ -30,9 +30,6 @@ import com.phantasmdragon.quote.callbackLayer.MarkAsDeletedCallback
 import com.phantasmdragon.quote.callbackLayer.OnLikeListener
 import com.phantasmdragon.quote.callbackLayer.viewModel.MainViewModel
 import com.phantasmdragon.quote.dataLayer.json.Quote
-import com.phantasmdragon.quote.presentationLayer.fragment.tab.FavouriteQuoteFragment
-import com.phantasmdragon.quote.presentationLayer.fragment.tab.GetQuoteFragment
-import com.phantasmdragon.quote.presentationLayer.fragment.tab.SettingsFragment
 import com.phantasmdragon.quote.utilsLevel.BadgeIconUtils
 import com.phantasmdragon.quote.utilsLevel.withViewModel
 import dagger.android.support.DaggerAppCompatActivity
@@ -43,10 +40,6 @@ class MainActivity: DaggerAppCompatActivity(),
                     OnLikeListener,
                     MarkAsDeletedCallback {
 
-    @Inject lateinit var favouriteQuoteFragment: FavouriteQuoteFragment
-    @Inject lateinit var getQuoteFragment: GetQuoteFragment
-    @Inject lateinit var settingsFragment: SettingsFragment
-
     @Inject lateinit var tabColors: IntArray
     @Inject lateinit var bottomNavAdapter: AHBottomNavigationAdapter
     @Inject lateinit var viewPagerAdapter: FragmentViewPagerAdapter
@@ -54,12 +47,6 @@ class MainActivity: DaggerAppCompatActivity(),
     @Inject lateinit var badgeIconUtils: BadgeIconUtils
 
     private lateinit var mainViewModel: MainViewModel
-
-    private val fragments by lazy {
-        arrayOf(favouriteQuoteFragment,
-                getQuoteFragment,
-                settingsFragment)
-    }
 
     override fun onLike(quote: Quote) {
         actMain_bottomNav.setNotification(AHNotification.justText("${++mainViewModel.badgeCount}"),
@@ -97,9 +84,8 @@ class MainActivity: DaggerAppCompatActivity(),
 
     private fun initBottomNavigation() {
         bottomNavAdapter.setupWithBottomNavigation(actMain_bottomNav, tabColors)
-        viewPagerAdapter.fragments.addAll(fragments)
 
-        val currentItem = if (mainViewModel.currentPosition == -1) fragments.size.div(2) else mainViewModel.currentPosition
+        val currentItem = if (mainViewModel.currentPosition == -1) viewPagerAdapter.getMiddleItem() else mainViewModel.currentPosition
 
         actMain_viewPager.adapter = viewPagerAdapter
         actMain_viewPager.offscreenPageLimit = getOffScreenPageLimit()
@@ -112,7 +98,7 @@ class MainActivity: DaggerAppCompatActivity(),
         actMain_bottomNav.setOnTabSelectedListener(onTabSelectedListener)
     }
 
-    private fun getOffScreenPageLimit() = fragments.lastIndex
+    private fun getOffScreenPageLimit() = viewPagerAdapter.count - 1
 
     private fun fitToolbarColor(position: Int) {
         actMain_toolbar.setBackgroundColor(tabColors[position])

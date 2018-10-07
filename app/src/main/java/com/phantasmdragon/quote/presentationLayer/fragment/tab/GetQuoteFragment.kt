@@ -30,7 +30,6 @@ import com.phantasmdragon.quote.adapterLevel.recyclerView.viewHolder.ViewHolderF
 import com.phantasmdragon.quote.callbackLayer.OnLikeListener
 import com.phantasmdragon.quote.callbackLayer.handler.ClickHandler
 import com.phantasmdragon.quote.callbackLayer.viewModel.GetQuoteViewModel
-import com.phantasmdragon.quote.daggerLevel.annotation.scope.ActivityScope
 import com.phantasmdragon.quote.dataLayer.json.Quote
 import com.phantasmdragon.quote.databinding.FragmentGetQuoteBinding
 import com.phantasmdragon.quote.utilsLevel.ColorUtils
@@ -45,9 +44,13 @@ import me.yuqirong.cardswipelayout.CardLayoutManager
 import me.yuqirong.cardswipelayout.OnSwipeListener
 import javax.inject.Inject
 
-@ActivityScope
-class GetQuoteFragment @Inject constructor()
-    : DaggerFragment() {
+class GetQuoteFragment: DaggerFragment() {
+
+    companion object {
+        fun instantiate(bundle: Bundle? = null): GetQuoteFragment = GetQuoteFragment().apply {
+            arguments = bundle
+        }
+    }
 
     @Inject lateinit var viewHolderFactory: ViewHolderFactory
     @Inject lateinit var clickHandler: ClickHandler

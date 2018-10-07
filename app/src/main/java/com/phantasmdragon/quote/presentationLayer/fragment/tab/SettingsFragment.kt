@@ -27,16 +27,20 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.phantasmdragon.quote.R
 import com.phantasmdragon.quote.backgroundLevel.NotificationWorker
-import com.phantasmdragon.quote.daggerLevel.annotation.scope.ActivityScope
 import com.phantasmdragon.quote.utilsLevel.Constant
 import com.phantasmdragon.quote.utilsLevel.getSafeBoolean
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-@ActivityScope
-class SettingsFragment @Inject constructor()
+class SettingsFragment
     : BaseSettingsFragment(),
       SharedPreferences.OnSharedPreferenceChangeListener {
+
+    companion object {
+        fun instantiate(bundle: Bundle? = null): SettingsFragment = SettingsFragment().apply {
+            arguments = bundle
+        }
+    }
 
     @Inject lateinit var sharedPreferences: SharedPreferences
 

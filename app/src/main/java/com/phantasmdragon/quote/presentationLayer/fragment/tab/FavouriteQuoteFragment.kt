@@ -32,7 +32,6 @@ import com.phantasmdragon.quote.adapterLevel.recyclerView.viewHolder.QuoteViewHo
 import com.phantasmdragon.quote.callbackLayer.MarkAsDeletedCallback
 import com.phantasmdragon.quote.callbackLayer.SwipeToDeleteCallback
 import com.phantasmdragon.quote.callbackLayer.viewModel.FavouriteQuoteViewModel
-import com.phantasmdragon.quote.daggerLevel.annotation.scope.ActivityScope
 import com.phantasmdragon.quote.databinding.FragmentFavouriteBinding
 import com.phantasmdragon.quote.utilsLevel.inflateBinding
 import com.phantasmdragon.quote.utilsLevel.observe
@@ -42,10 +41,15 @@ import kotlinx.android.synthetic.main.fragment_favourite.*
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-@ActivityScope
-class FavouriteQuoteFragment @Inject constructor()
+class FavouriteQuoteFragment
     : DaggerFragment(),
       SwipeToDeleteCallback {
+
+    companion object {
+        fun instantiate(bundle: Bundle? = null): FavouriteQuoteFragment = FavouriteQuoteFragment().apply {
+            arguments = bundle
+        }
+    }
 
     @Inject lateinit var quoteRecyclerViewAdapter: QuoteRecyclerViewAdapter
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory

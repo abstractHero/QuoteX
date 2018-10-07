@@ -17,21 +17,25 @@ package com.phantasmdragon.quote.adapterLevel.viewPager
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import com.phantasmdragon.quote.presentationLayer.fragment.tab.BaseSettingsFragment
-import dagger.android.support.DaggerFragment
+import android.support.v4.app.FragmentStatePagerAdapter
+import com.phantasmdragon.quote.presentationLayer.fragment.tab.FavouriteQuoteFragment
+import com.phantasmdragon.quote.presentationLayer.fragment.tab.GetQuoteFragment
+import com.phantasmdragon.quote.presentationLayer.fragment.tab.SettingsFragment
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 class FragmentViewPagerAdapter @Inject constructor(supporFragmentManager: FragmentManager)
-    : FragmentPagerAdapter(supporFragmentManager) {
+    : FragmentStatePagerAdapter(supporFragmentManager) {
 
-    val fragments = ArrayList<Any>()
-
-    override fun getItem(position: Int): Fragment = when (fragments[position]) {
-        is DaggerFragment -> fragments[position] as DaggerFragment
-        else -> fragments[position] as BaseSettingsFragment
+    override fun getItem(position: Int): Fragment = when (position) {
+        0 -> FavouriteQuoteFragment.instantiate()
+        1 -> GetQuoteFragment.instantiate()
+        2 -> SettingsFragment.instantiate()
+        else -> throw IllegalStateException("Unsupported position of ${FragmentViewPagerAdapter::class.java.canonicalName}")
     }
 
-    override fun getCount() = fragments.size
+    override fun getCount() = 3
+
+    fun getMiddleItem() = count.div(2)
 
 }
