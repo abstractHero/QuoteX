@@ -27,14 +27,16 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
-abstract class BaseFetchQuoteRepository(private val quoteApi: QuoteApi,
-                                        private val resources: Resources,
-                                        private val sharedPreferences: SharedPreferences) {
+abstract class BaseFetchQuoteRepository(
+    private val quoteApi: QuoteApi,
+    private val resources: Resources,
+    private val sharedPreferences: SharedPreferences
+) {
 
     abstract val queryState: ObservableField<Constant.QueryState>
 
     private val language: String
-        get() = sharedPreferences.getString(resources.getString(R.string.settings_key_quote_language), resources.getString(R.string.default_quote_language))
+        get() = sharedPreferences.getString(resources.getString(R.string.settings_key_quote_language), resources.getString(R.string.default_quote_language)) ?: ""
 
     private var disposable: Disposable? = null
 
@@ -42,23 +44,22 @@ abstract class BaseFetchQuoteRepository(private val quoteApi: QuoteApi,
         queryState.set(Constant.QueryState.PROCESS)
 
         disposable = quoteApi.getQuote(language)
-                             .subscribeOn(Schedulers.io())
-                             .subscribeBy(
-                                     onSuccess = {
-                                         handleQuote(it)
-                                         queryState.set(Constant.QueryState.DONE)
-                                     },
-                                     onError = {
-                                         postError(it)
-                                     }
-                             )
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                 onSuccess = {
+                     handleQuote(it)
+                     queryState.set(Constant.QueryState.DONE)
+                 },
+                 onError = {
+                     postError(it)
+                 }
+            )
     }
 
     abstract fun handleQuote(quote: Quote?)
 
     private fun postError(throwable: Throwable?) {
-        queryState.set(if (throwable is NoNetworkException) Constant.QueryState.NO_NETWORK
-                       else Constant.QueryState.ERROR)
+        queryState.set(if (throwable is NoNetworkException) Constant.QueryState.NO_NETWORK else Constant.QueryState.ERROR)
     }
 
     fun dispose() {

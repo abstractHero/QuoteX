@@ -25,9 +25,10 @@ import javax.inject.Inject
  * The resources variable CANNOT be private,
  * because it's used in the fragment get quote layout for binding purposes.
  */
-class GetQuoteViewModel @Inject constructor(private val quoteRepository: QuoteRepository,
-                                            val resources: Resources)
-    : ViewModel() {
+class GetQuoteViewModel @Inject constructor(
+    private val quoteRepository: QuoteRepository,
+    val resources: Resources
+) : ViewModel() {
 
     val quote = quoteRepository.quote
 

@@ -30,13 +30,12 @@ class DatabaseModule {
 
     @Provides
     @ApplicationScope
-    fun provideDatabase(@ApplicationContext application: Context,
-                        migrations: Array<@JvmSuppressWildcards Migration>)
-            = Room.databaseBuilder(application,
-                                   QuoteDatabase::class.java,
-                                   DATABASE_NAME)
-                  .addMigrations(*migrations)
-                  .build()
+    fun provideDatabase(@ApplicationContext application: Context, migrations: Array<@JvmSuppressWildcards Migration>) =
+            Room.databaseBuilder(application,
+                                 QuoteDatabase::class.java,
+                                 DATABASE_NAME)
+                .addMigrations(*migrations)
+                .build()
 
     @Provides
     @ApplicationScope

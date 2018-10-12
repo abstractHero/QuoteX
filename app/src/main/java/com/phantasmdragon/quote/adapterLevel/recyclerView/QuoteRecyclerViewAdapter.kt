@@ -27,21 +27,10 @@ import com.phantasmdragon.quote.callbackLayer.handler.ClickHandler
 import com.phantasmdragon.quote.dataLayer.json.Quote
 import javax.inject.Inject
 
-class QuoteRecyclerViewAdapter @Inject constructor(private val viewHolderFactory: ViewHolderFactory,
-                                                   private val clickHandler: ClickHandler)
-    : PagedListAdapter<Quote, QuoteViewHolder>(diffCallback) {
-
-    companion object {
-
-        private val diffCallback = object : DiffUtil.ItemCallback<Quote>() {
-
-            override fun areItemsTheSame(oldItem: Quote, newItem: Quote) = oldItem.quoteId == newItem.quoteId
-
-            override fun areContentsTheSame(oldItem: Quote, newItem: Quote) = oldItem == newItem
-
-        }
-
-    }
+class QuoteRecyclerViewAdapter @Inject constructor(
+    private val viewHolderFactory: ViewHolderFactory,
+    private val clickHandler: ClickHandler
+) : PagedListAdapter<Quote, QuoteViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, type: Int): QuoteViewHolder {
         return viewHolderFactory.createQuoteViewHolder(parent)
@@ -55,6 +44,15 @@ class QuoteRecyclerViewAdapter @Inject constructor(private val viewHolderFactory
         holder.binding.clickHandler = clickHandler
 
         holder.itemView.startAnimation(bounceAnimation)
+    }
+
+    companion object {
+        private val diffCallback = object : DiffUtil.ItemCallback<Quote>() {
+
+            override fun areItemsTheSame(oldItem: Quote, newItem: Quote) = oldItem.quoteId == newItem.quoteId
+
+            override fun areContentsTheSame(oldItem: Quote, newItem: Quote) = oldItem == newItem
+        }
     }
 
 }

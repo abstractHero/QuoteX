@@ -33,18 +33,15 @@ class OkHttpModule {
 
     @Provides
     @ApplicationScope
-    fun provideOkHttpClient(cache: Cache,
-                            networkConnectionInterceptor: NetworkConnectionInterceptor): OkHttpClient
-            = OkHttpClient.Builder()
-                          .cache(cache)
-                          .addInterceptor(networkConnectionInterceptor)
-                          .build()
+    fun provideOkHttpClient(cache: Cache, networkConnectionInterceptor: NetworkConnectionInterceptor): OkHttpClient =
+            OkHttpClient.Builder()
+                        .cache(cache)
+                        .addInterceptor(networkConnectionInterceptor)
+                        .build()
 
     @Provides
     @ApplicationScope
-    fun provideHttpCache(@ApplicationContext context: Context,
-                         @CacheSize cacheSize: Long): Cache
-            = Cache(context.cacheDir, cacheSize)
+    fun provideHttpCache(@ApplicationContext context: Context, @CacheSize cacheSize: Long): Cache = Cache(context.cacheDir, cacheSize)
 
     @Provides
     @CacheSize
@@ -53,12 +50,11 @@ class OkHttpModule {
 
     @Provides
     @ApplicationScope
-    fun provideConnectingInterceptor(networkConnectionCallback: NetworkConnectionCallback)
-            = NetworkConnectionInterceptor(networkConnectionCallback)
+    fun provideConnectingInterceptor(networkConnectionCallback: NetworkConnectionCallback) =
+            NetworkConnectionInterceptor(networkConnectionCallback)
 
     @Provides
     @ApplicationScope
-    fun provideNetworkConnectionCheck(connectivityManager: ConnectivityManager): NetworkConnectionCallback
-            = NetworkConnection(connectivityManager)
+    fun provideNetworkConnectionCheck(connectivityManager: ConnectivityManager): NetworkConnectionCallback = NetworkConnection(connectivityManager)
 
 }

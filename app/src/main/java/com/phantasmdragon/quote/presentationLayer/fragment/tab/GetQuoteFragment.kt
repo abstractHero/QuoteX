@@ -44,13 +44,7 @@ import me.yuqirong.cardswipelayout.CardLayoutManager
 import me.yuqirong.cardswipelayout.OnSwipeListener
 import javax.inject.Inject
 
-class GetQuoteFragment: DaggerFragment() {
-
-    companion object {
-        fun instantiate(bundle: Bundle? = null): GetQuoteFragment = GetQuoteFragment().apply {
-            arguments = bundle
-        }
-    }
+class GetQuoteFragment : DaggerFragment() {
 
     @Inject lateinit var viewHolderFactory: ViewHolderFactory
     @Inject lateinit var clickHandler: ClickHandler
@@ -138,6 +132,12 @@ class GetQuoteFragment: DaggerFragment() {
         }
 
         override fun onSwipedClear() {}
+    }
+
+    companion object {
+        fun instantiate(bundle: Bundle? = null): GetQuoteFragment = GetQuoteFragment().apply {
+            arguments = bundle
+        }
     }
 
 }

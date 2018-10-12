@@ -26,8 +26,9 @@ import javax.inject.Inject
 /**
  * Has the custom injector for injecting stuff into the work manager.
  */
-class QuoteApplication: DaggerApplication(),
-                        HasWorkerInjector {
+class QuoteApplication :
+    DaggerApplication(),
+    HasWorkerInjector {
 
     @Inject lateinit var workerInjector: DispatchingAndroidInjector<Worker>
 

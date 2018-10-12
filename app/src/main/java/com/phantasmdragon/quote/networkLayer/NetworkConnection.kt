@@ -19,8 +19,8 @@ import android.net.ConnectivityManager
 import com.phantasmdragon.quote.callbackLayer.NetworkConnectionCallback
 import javax.inject.Inject
 
-class NetworkConnection @Inject constructor(private val connectivityManager: ConnectivityManager)
-    : NetworkConnectionCallback {
+class NetworkConnection @Inject constructor(private val connectivityManager: ConnectivityManager) :
+    NetworkConnectionCallback {
 
     override fun isConnected(): Boolean {
         val networkInfo = connectivityManager.activeNetworkInfo

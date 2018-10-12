@@ -23,11 +23,12 @@ import com.phantasmdragon.quote.callbackLayer.handler.ClickHandler
 import com.phantasmdragon.quote.dataLayer.json.Quote
 import com.phantasmdragon.quote.utilsLevel.ColorUtils
 
-class GetQuoteRecyclerViewAdapter(private val viewHolderFactory: ViewHolderFactory,
-                                  private val quoteList: ArrayList<Quote?>,
-                                  private val clickHandler: ClickHandler,
-                                  private val colorUtils: ColorUtils)
-    : RecyclerView.Adapter<GetQuoteViewHolder>() {
+class GetQuoteRecyclerViewAdapter(
+    private val viewHolderFactory: ViewHolderFactory,
+    private val quoteList: ArrayList<Quote?>,
+    private val clickHandler: ClickHandler,
+    private val colorUtils: ColorUtils
+) : RecyclerView.Adapter<GetQuoteViewHolder>() {
 
     fun addQuote(quote: Quote?) {
         quoteList.add(quote)

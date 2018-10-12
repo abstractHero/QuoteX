@@ -21,14 +21,17 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-class NetworkConnectionInterceptor @Inject constructor(private val networkConnectionCallback: NetworkConnectionCallback)
-    : Interceptor {
+class NetworkConnectionInterceptor @Inject constructor(private val networkConnectionCallback: NetworkConnectionCallback) :
+    Interceptor {
 
     @Throws(NoNetworkException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val isConnected = networkConnectionCallback.isConnected()
 
-        return if (isConnected) chain.proceed(chain.request())
-               else throw NoNetworkException("There is no internet connection. Connect to the internet and try again.")
+        return if (isConnected) {
+            chain.proceed(chain.request())
+        } else {
+            throw NoNetworkException("There is no internet connection. Connect to the internet and try again.")
+        }
     }
 }

@@ -34,14 +34,11 @@ import com.phantasmdragon.quote.callbackLayer.receiver.NotificationsActionBroadc
 import com.phantasmdragon.quote.dataLayer.json.Quote
 import javax.inject.Inject
 
-class NotificationHelper @Inject constructor(private val context: Context,
-                                             private val notificationManager: NotificationManager,
-                                             private val sharedPreference: SharedPreferences)
-    : ContextWrapper(context) {
-
-    companion object {
-        const val QUOTE_CHANNEL_ID = "quote_channel_id"
-    }
+class NotificationHelper @Inject constructor(
+    private val context: Context,
+    private val notificationManager: NotificationManager,
+    private val sharedPreference: SharedPreferences
+) : ContextWrapper(context) {
 
     private val vibrationPattern = longArrayOf(0, 200)
 
@@ -58,10 +55,13 @@ class NotificationHelper @Inject constructor(private val context: Context,
         quoteChannel.description = getString(R.string.notification_channel_quotes_descr)
         quoteChannel.enableVibration(isVibrated())
         quoteChannel.vibrationPattern = vibrationPattern
-        quoteChannel.setSound(getSoundPath(), AudioAttributes.Builder()
-                                                             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                                                             .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
-                                                             .build())
+        quoteChannel.setSound(
+            getSoundPath(),
+            AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
+                    .build()
+        )
 
         notificationManager.createNotificationChannel(quoteChannel)
     }
@@ -72,14 +72,14 @@ class NotificationHelper @Inject constructor(private val context: Context,
 
     fun getQuoteNotification(quote: Quote?): NotificationCompat.Builder {
         val notificationBuilder = NotificationCompat.Builder(context, QUOTE_CHANNEL_ID)
-                                                    .setContentTitle(getString(R.string.push_title))
-                                                    .setContentText(getString(R.string.push_collapsed_subtitle))
-                                                    .setSmallIcon(R.drawable.ic_push)
-                                                    .setStyle(NotificationCompat.BigTextStyle()
-                                                                                .bigText(quote?.toShareView()))
-                                                    .addAction(R.drawable.ic_favorite,
-                                                               getString(R.string.push_action_like),
-                                                               getActionPendingIntent(quote))
+                .setContentTitle(getString(R.string.push_title))
+                .setContentText(getString(R.string.push_collapsed_subtitle))
+                .setSmallIcon(R.drawable.ic_push)
+                .setStyle(NotificationCompat.BigTextStyle()
+                                            .bigText(quote?.toShareView()))
+                .addAction(R.drawable.ic_favorite,
+                           getString(R.string.push_action_like),
+                           getActionPendingIntent(quote))
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             notificationBuilder.setSound(getSoundPath())
@@ -89,11 +89,13 @@ class NotificationHelper @Inject constructor(private val context: Context,
         return notificationBuilder
     }
 
-    private fun getActionPendingIntent(quote: Quote?)
-            = PendingIntent.getBroadcast(this,
-                                         NotificationsActionBroadcastReceiver.ACTION_BROADCAST_REQUEST_CODE,
-                                         getActionIntent(quote),
-                                         PendingIntent.FLAG_UPDATE_CURRENT)
+    private fun getActionPendingIntent(quote: Quote?) =
+        PendingIntent.getBroadcast(
+            this,
+            NotificationsActionBroadcastReceiver.ACTION_BROADCAST_REQUEST_CODE,
+            getActionIntent(quote),
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
     private fun getActionIntent(quote: Quote?) = Intent(this, NotificationsActionBroadcastReceiver::class.java).apply {
         action = ACTION_ADD_TO_FAVOURITE
@@ -103,6 +105,10 @@ class NotificationHelper @Inject constructor(private val context: Context,
 
     fun notify(notificationId: Int, notification: NotificationCompat.Builder) {
         notificationManager.notify(notificationId, notification.build())
+    }
+
+    companion object {
+        const val QUOTE_CHANNEL_ID = "quote_channel_id"
     }
 
 }

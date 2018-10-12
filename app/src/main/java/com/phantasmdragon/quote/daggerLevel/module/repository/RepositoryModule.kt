@@ -32,32 +32,20 @@ class RepositoryModule {
 
     @Provides
     @ApplicationScope
-    fun provideQuoteRepository(quoteApi: QuoteApi,
-                               resources: Resources,
-                               sharedPreferences: SharedPreferences)
-            = QuoteRepository(quoteApi,
-                              resources,
-                              sharedPreferences)
+    fun provideQuoteRepository(quoteApi: QuoteApi, resources: Resources, sharedPreferences: SharedPreferences) =
+            QuoteRepository(quoteApi, resources, sharedPreferences)
 
     @Provides
     @ApplicationScope
-    fun provideQuoteServiceRepository(quoteApi: QuoteApi,
-                                      resources: Resources,
-                                      sharedPreferences: SharedPreferences)
-            = QuoteWorkerRepository(quoteApi,
-                                     resources,
-                                     sharedPreferences)
+    fun provideQuoteServiceRepository(quoteApi: QuoteApi, resources: Resources, sharedPreferences: SharedPreferences) =
+            QuoteWorkerRepository(quoteApi, resources, sharedPreferences)
 
     /*
     Repositories allow to work with the database are down below.
      */
     @Provides
     @ApplicationScope
-    fun provideDatabaseQuoteRepository(quoteDao: QuoteDao,
-                                       authorDao: AuthorDao,
-                                       resources: Resources)
-            = DatabaseQuoteRepository(quoteDao,
-            authorDao,
-            resources)
+    fun provideDatabaseQuoteRepository(quoteDao: QuoteDao, authorDao: AuthorDao, resources: Resources) =
+            DatabaseQuoteRepository(quoteDao, authorDao, resources)
 
 }

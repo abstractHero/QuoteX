@@ -25,7 +25,7 @@ import com.phantasmdragon.quote.dataLayer.database.entity.QuoteEntity
 @Database(entities = [QuoteEntity::class,
                       AuthorEntity::class],
           version = 3)
-abstract class QuoteDatabase: RoomDatabase() {
+abstract class QuoteDatabase : RoomDatabase() {
 
     abstract fun getQuoteDao(): QuoteDao
     abstract fun getAuthorDao(): AuthorDao

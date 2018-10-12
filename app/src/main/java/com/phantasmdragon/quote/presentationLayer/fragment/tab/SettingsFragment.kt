@@ -28,19 +28,14 @@ import androidx.work.WorkManager
 import com.phantasmdragon.quote.R
 import com.phantasmdragon.quote.backgroundLevel.NotificationWorker
 import com.phantasmdragon.quote.utilsLevel.Constant
+import com.phantasmdragon.quote.utilsLevel.edit
 import com.phantasmdragon.quote.utilsLevel.getSafeBoolean
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class SettingsFragment
-    : BaseSettingsFragment(),
-      SharedPreferences.OnSharedPreferenceChangeListener {
-
-    companion object {
-        fun instantiate(bundle: Bundle? = null): SettingsFragment = SettingsFragment().apply {
-            arguments = bundle
-        }
-    }
+class SettingsFragment :
+    BaseSettingsFragment(),
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject lateinit var sharedPreferences: SharedPreferences
 
@@ -90,7 +85,7 @@ class SettingsFragment
         workManager.enqueue(periodicWork)
     }
 
-    private fun getChosenInterval() = sharedPreferences.getString(getString(R.string.settings_key_interval), "").toLong()
+    private fun getChosenInterval() = sharedPreferences.getLong(getString(R.string.settings_key_interval), PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS)
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
@@ -122,9 +117,8 @@ class SettingsFragment
 
         setRingtoneSummary(uri)
 
-        sharedPreferences.edit().apply {
+        sharedPreferences.edit {
             putString(getString(R.string.settings_key_sound), uri.toString())
-            apply()
         }
     }
 
@@ -138,5 +132,11 @@ class SettingsFragment
     }
 
     private fun getRingtoneUri() = Uri.parse(sharedPreferences.getString(getString(R.string.settings_key_sound), ""))
+
+    companion object {
+        fun instantiate(bundle: Bundle? = null): SettingsFragment = SettingsFragment().apply {
+            arguments = bundle
+        }
+    }
 
 }

@@ -31,13 +31,10 @@ import com.phantasmdragon.quote.utilsLevel.getCorrectedAuthor
 import io.reactivex.disposables.Disposables
 import javax.inject.Inject
 
-class NotificationWorker(context: Context,
-                         workerParameters: WorkerParameters)
-    : Worker(context, workerParameters) {
-
-    companion object {
-        const val QUOTE_NOTIFICATION_ID = 42
-    }
+class NotificationWorker(
+    context: Context,
+    workerParameters: WorkerParameters
+) : Worker(context, workerParameters) {
 
     @Inject lateinit var notificationHelper: NotificationHelper
     @Inject lateinit var quoteWorkerRepository: QuoteWorkerRepository
@@ -104,6 +101,10 @@ class NotificationWorker(context: Context,
         addOnPropertyChangedCallback(it)
     }.let {
         Disposables.fromAction { removeOnPropertyChangedCallback(it) }
+    }
+
+    companion object {
+        const val QUOTE_NOTIFICATION_ID = 42
     }
 
 }

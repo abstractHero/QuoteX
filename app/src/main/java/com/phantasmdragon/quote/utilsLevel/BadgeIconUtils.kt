@@ -32,8 +32,10 @@ import javax.inject.Inject
 /**
  * It's not good-looking code. It's better to re-write this.
  */
-class BadgeIconUtils @Inject constructor(private val layoutInflater: LayoutInflater,
-                                         private val resources: Resources) {
+class BadgeIconUtils @Inject constructor(
+    private val layoutInflater: LayoutInflater,
+    private val resources: Resources
+) {
 
     fun getDrawableWithBadge(count: Int, drawableId: Int): Drawable {
         val view = layoutInflater.inflate(R.layout.badge_count, null, false)

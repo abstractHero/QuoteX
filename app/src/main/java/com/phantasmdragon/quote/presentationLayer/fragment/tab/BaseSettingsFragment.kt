@@ -25,14 +25,14 @@ import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
 /**
- * Basically, there is the same piece of logic like in the DaggerFragment class.
+ * Basically, there is the same piece of logic like the DaggerFragment class has.
  *
  * It's impossible to inherit from two classes;
  * consequently, that's how I've come up with the idea to achieve an injectable preference fragment.
  */
-abstract class BaseSettingsFragment
-    : PreferenceFragmentCompat(),
-      HasSupportFragmentInjector {
+abstract class BaseSettingsFragment :
+    PreferenceFragmentCompat(),
+    HasSupportFragmentInjector {
 
     @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
 

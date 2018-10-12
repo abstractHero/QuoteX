@@ -34,18 +34,16 @@ class RetrofitModule {
 
     @Provides
     @ApplicationScope
-    fun provideRetrofitInterface(okHttpClient: OkHttpClient,
-                                 converterFactory: MoshiConverterFactory,
-                                 rxConverter: RxJava2CallAdapterFactory): Retrofit {
-
-        return Retrofit.Builder()
-                       .baseUrl(Constant.BASE_URL)
-                       .client(okHttpClient)
-                       .addConverterFactory(converterFactory)
-                       .addCallAdapterFactory(rxConverter)
-                       .build()
-
-    }
+    fun provideRetrofitInterface(
+        okHttpClient: OkHttpClient,
+        converterFactory: MoshiConverterFactory,
+        rxConverter: RxJava2CallAdapterFactory
+    ): Retrofit = Retrofit.Builder()
+            .baseUrl(Constant.BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(converterFactory)
+            .addCallAdapterFactory(rxConverter)
+            .build()
 
     @Provides
     @ApplicationScope

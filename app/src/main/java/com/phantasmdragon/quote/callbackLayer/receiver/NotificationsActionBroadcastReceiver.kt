@@ -24,15 +24,7 @@ import com.phantasmdragon.quote.dataLayer.repository.DatabaseQuoteRepository
 import dagger.android.DaggerBroadcastReceiver
 import javax.inject.Inject
 
-class NotificationsActionBroadcastReceiver: DaggerBroadcastReceiver() {
-
-    companion object {
-        const val ACTION_BROADCAST_REQUEST_CODE = 2
-        const val ACTION_ADD_TO_FAVOURITE = "action_add_to_favourite"
-
-        const val EXTRA_QUOTE_TEXT = "action_quote_text"
-        const val EXTRA_QUOTE_AUTHOR = "action_quote_author"
-    }
+class NotificationsActionBroadcastReceiver : DaggerBroadcastReceiver() {
 
     @Inject lateinit var databaseQuoteRepository: DatabaseQuoteRepository
     @Inject lateinit var notificationManager: NotificationManager
@@ -57,6 +49,14 @@ class NotificationsActionBroadcastReceiver: DaggerBroadcastReceiver() {
 
     private fun cancelNotification() {
         notificationManager.cancel(QUOTE_NOTIFICATION_ID)
+    }
+
+    companion object {
+        const val ACTION_BROADCAST_REQUEST_CODE = 2
+        const val ACTION_ADD_TO_FAVOURITE = "action_add_to_favourite"
+
+        const val EXTRA_QUOTE_TEXT = "action_quote_text"
+        const val EXTRA_QUOTE_AUTHOR = "action_quote_author"
     }
 
 }

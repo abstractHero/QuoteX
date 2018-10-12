@@ -27,13 +27,11 @@ import android.view.ViewGroup
 import com.phantasmdragon.quote.R
 import com.phantasmdragon.quote.dataLayer.json.Quote
 
-inline fun <reified T : ViewDataBinding> LayoutInflater.inflateBinding(layoutId: Int,
-                                                                       viewGroup: ViewGroup?,
-                                                                       attachToRoot: Boolean = false): T
-        = DataBindingUtil.inflate(this,
-                                  layoutId,
-                                  viewGroup,
-                                  attachToRoot)
+inline fun <reified T : ViewDataBinding> LayoutInflater.inflateBinding(
+    layoutId: Int,
+    viewGroup: ViewGroup?,
+    attachToRoot: Boolean = false
+): T = DataBindingUtil.inflate(this, layoutId, viewGroup, attachToRoot)
 
 /**
  * There are four absolutely identical methods down below,
@@ -68,10 +66,10 @@ fun <T : Any?, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T?) -
 /**
  * The function turns the quote's fields into the view that is appropriate for sharing.
  */
-fun Quote?.toShareView()
-        = """"${this?.quoteText}"
-            |
-            |© ${this?.quoteAuthor}""".trimMargin()
+fun Quote?.toShareView() =
+    """"${this?.quoteText}"
+        |
+        |© ${this?.quoteAuthor}""".trimMargin()
 
 fun Quote.getCorrectedAuthor(resources: Resources) = if (this.quoteAuthor.isNullOrEmpty()) resources.getString(R.string.default_author_name) else this.quoteAuthor?.trim()
 

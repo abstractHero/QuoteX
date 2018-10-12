@@ -28,10 +28,12 @@ import android.arch.persistence.room.PrimaryKey
                                   parentColumns = ["id"],
                                   childColumns = ["authorId"],
                                   onDelete = CASCADE)])
-data class QuoteEntity(val authorId: Long,
-                       val quoteText: String,
-                       val isDeleted: Boolean = false,
-                       val deletedOrder: Int = 0) {
+data class QuoteEntity(
+    val authorId: Long,
+    val quoteText: String,
+    val isDeleted: Boolean = false,
+    val deletedOrder: Int = 0
+) {
 
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0

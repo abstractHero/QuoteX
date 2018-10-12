@@ -22,10 +22,11 @@ import com.phantasmdragon.quote.adapterLevel.recyclerView.viewHolder.QuoteViewHo
 import com.phantasmdragon.quote.callbackLayer.SwipeToDeleteCallback
 import java.lang.ref.WeakReference
 
-class SwipeToDeleteItemTouchHelper(private val swipeToDeleteCallback: WeakReference<SwipeToDeleteCallback>,
-                                   dragDirs: Int,
-                                   swipeDirs: Int)
-    : ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
+class SwipeToDeleteItemTouchHelper(
+    private val swipeToDeleteCallback: WeakReference<SwipeToDeleteCallback>,
+    dragDirs: Int,
+    swipeDirs: Int
+) : ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         getDefaultUIUtil().clearView(getForegroundView(viewHolder))
@@ -45,44 +46,47 @@ class SwipeToDeleteItemTouchHelper(private val swipeToDeleteCallback: WeakRefere
         }
     }
 
-    override fun onChildDraw(canvas: Canvas,
-                             recyclerView: RecyclerView,
-                             viewHolder: RecyclerView.ViewHolder,
-                             dX: Float,
-                             dY: Float,
-                             actionState: Int,
-                             isCurrentlyActive: Boolean) {
+    override fun onChildDraw(
+        canvas: Canvas,
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        dX: Float, dY: Float,
+        actionState: Int,
+        isCurrentlyActive: Boolean
+    ) {
 
-        getDefaultUIUtil().onDraw(canvas,
-                                  recyclerView,
-                                  getForegroundView(viewHolder),
-                                  dX,
-                                  dY,
-                                  actionState,
-                                  isCurrentlyActive)
-
-    }
-
-    override fun onChildDrawOver(canvas: Canvas,
-                                 recyclerView: RecyclerView,
-                                 viewHolder: RecyclerView.ViewHolder?,
-                                 dX: Float,
-                                 dY: Float,
-                                 actionState: Int,
-                                 isCurrentlyActive: Boolean) {
-
-        getDefaultUIUtil().onDrawOver(canvas,
-                                      recyclerView,
-                                      getForegroundView(viewHolder),
-                                      dX,
-                                      dY,
-                                      actionState,
-                                      isCurrentlyActive)
+        getDefaultUIUtil().onDraw(
+            canvas,
+            recyclerView,
+            getForegroundView(viewHolder),
+            dX, dY,
+            actionState,
+            isCurrentlyActive
+        )
 
     }
 
-    private fun getForegroundView(viewHolder: RecyclerView.ViewHolder?)
-            = getQuoteViewHolder(viewHolder).binding.itemQuoteForegroundView
+    override fun onChildDrawOver(
+        canvas: Canvas,
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder?,
+        dX: Float, dY: Float,
+        actionState: Int,
+        isCurrentlyActive: Boolean
+    ) {
+
+        getDefaultUIUtil().onDrawOver(
+            canvas,
+            recyclerView,
+            getForegroundView(viewHolder),
+            dX, dY,
+            actionState,
+            isCurrentlyActive
+        )
+
+    }
+
+    private fun getForegroundView(viewHolder: RecyclerView.ViewHolder?) = getQuoteViewHolder(viewHolder).binding.itemQuoteForegroundView
 
     private fun getQuoteViewHolder(viewHolder: RecyclerView.ViewHolder?) = viewHolder as QuoteViewHolder
 

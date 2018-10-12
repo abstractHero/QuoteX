@@ -29,11 +29,10 @@ class WorkerProvideModule {
 
     @Provides
     @ApplicationScope
-    fun provideNotificationHelper1(@ApplicationContext context: Context,
-                                  notificationManager: NotificationManager,
-                                  sharedPreferences: SharedPreferences)
-            = NotificationHelper(context,
-                                 notificationManager,
-                                 sharedPreferences)
+    fun provideNotificationHelper1(
+        @ApplicationContext context: Context,
+        notificationManager: NotificationManager,
+        sharedPreferences: SharedPreferences
+    ) = NotificationHelper(context, notificationManager, sharedPreferences)
 
 }

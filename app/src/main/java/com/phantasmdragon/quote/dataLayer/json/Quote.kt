@@ -15,6 +15,8 @@
  */
 package com.phantasmdragon.quote.dataLayer.json
 
-data class Quote(val quoteId: Long,
-                 val quoteText: String,
-                 var quoteAuthor: String?)
+data class Quote(
+    val quoteId: Long,
+    val quoteText: String,
+    var quoteAuthor: String?
+)

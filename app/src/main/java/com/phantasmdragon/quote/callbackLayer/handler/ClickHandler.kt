@@ -27,16 +27,17 @@ import javax.inject.Inject
 /**
  * We must use an activity context due to the share chooser is started through the context.
  */
-class ClickHandler @Inject constructor(@ActivityContext private val context: Context,
-                                       private val resources: Resources) {
+class ClickHandler @Inject constructor(
+    @ActivityContext private val context: Context,
+    private val resources: Resources
+) {
 
     fun onShareClick(quote: Quote) {
         context.startActivity(getShareChooser(quote))
     }
 
-    private fun getShareChooser(quote: Quote)
-            = Intent.createChooser(getShareIntent(quote),
-                                   resources.getString(R.string.share_title))
+    private fun getShareChooser(quote: Quote) =
+            Intent.createChooser(getShareIntent(quote), resources.getString(R.string.share_title))
 
     private fun getShareIntent(quote: Quote) = Intent().apply {
         type = "text/plain"

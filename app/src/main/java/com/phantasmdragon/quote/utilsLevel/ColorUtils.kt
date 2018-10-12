@@ -25,21 +25,22 @@ import javax.inject.Inject
  * Allow getting a random color from the array.xml file,
  * which is used to fill the card background, in the get quote fragment, with a chosen color.
  */
-class ColorUtils @Inject constructor(@ApplicationContext private val context: Context,
-                                     private val resources: Resources) {
+class ColorUtils @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val resources: Resources
+) {
 
     fun getRandomMaterialColor(): Int {
         val colorTypes = Constant.TypeColor.values()
         val typeColor = colorTypes[getRandomIndex(colorTypes.size)]
 
         var returnColor = Color.BLACK
-        val arrayId = resources.getIdentifier("mdcolor_" + typeColor,
-                                              "array",
-                                              context.packageName)
+        val arrayId = resources.getIdentifier("mdcolor_$typeColor", "array", context.packageName)
 
         if (arrayId != 0) {
             val colors = resources.obtainTypedArray(arrayId)
             val index = getRandomIndex(colors.length())
+
             returnColor = colors.getColor(index, Color.BLACK)
             colors.recycle()
         }

@@ -40,7 +40,6 @@ class MainActivityModule {
 
     @Provides
     @ActivityScope
-    fun provideBadgeIconUtils(layoutInflater: LayoutInflater, resources: Resources)
-            = BadgeIconUtils(layoutInflater, resources)
+    fun provideBadgeIconUtils(layoutInflater: LayoutInflater, resources: Resources) = BadgeIconUtils(layoutInflater, resources)
 
 }
