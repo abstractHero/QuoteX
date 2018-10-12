@@ -40,21 +40,16 @@ object BindingAdapter {
              .into(this)
     }
 
-    private fun QueryState.chooseImage() = if (this == QueryState.NO_NETWORK) {
-        R.drawable.headsup_no_connection
+    private fun QueryState.chooseImage() =
+            if (this == QueryState.NO_NETWORK) R.drawable.headsup_no_connection else R.drawable.headsup_error
+
+
+    private fun View.isProceed(queryState: QueryState) = if (isError(queryState)) {
+        visibility = View.VISIBLE
+        true
     } else {
-        R.drawable.headsup_error
-    }
-
-    private fun View.isProceed(queryState: QueryState): Boolean {
-
-        return if (isError(queryState)) {
-            visibility = View.VISIBLE
-            true
-        } else {
-            visibility = View.GONE
-            false
-        }
+        visibility = View.GONE
+        false
     }
 
     @JvmStatic
