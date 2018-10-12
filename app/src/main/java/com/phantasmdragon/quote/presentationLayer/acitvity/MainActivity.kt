@@ -15,15 +15,18 @@
  */
 package com.phantasmdragon.quote.presentationLayer.acitvity
 
+import android.app.SearchManager
 import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.support.v7.preference.PreferenceManager
+import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification
+import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import com.phantasmdragon.quote.R
 import com.phantasmdragon.quote.adapterLevel.viewPager.FragmentViewPagerAdapter
 import com.phantasmdragon.quote.callbackLayer.MarkAsDeletedCallback
@@ -33,24 +36,26 @@ import com.phantasmdragon.quote.dataLayer.json.Quote
 import com.phantasmdragon.quote.utilsLevel.BadgeIconUtils
 import com.phantasmdragon.quote.utilsLevel.withViewModel
 import dagger.android.support.DaggerAppCompatActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MainActivity: DaggerAppCompatActivity(),
-                    OnLikeListener,
-                    MarkAsDeletedCallback {
-
-    companion object {
-        const val KEY_UNDO_BADGE = "key_undo_badge"
-    }
+class MainActivity :
+    DaggerAppCompatActivity(),
+    OnLikeListener,
+    MarkAsDeletedCallback {
 
     @Inject lateinit var tabColors: IntArray
     @Inject lateinit var bottomNavAdapter: AHBottomNavigationAdapter
     @Inject lateinit var viewPagerAdapter: FragmentViewPagerAdapter
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject lateinit var badgeIconUtils: BadgeIconUtils
+    @Inject lateinit var searchManager: SearchManager
 
     private lateinit var mainViewModel: MainViewModel
+    private var disposable: Disposable? = null
 
     override fun onLike(quote: Quote) {
         actMain_bottomNav.setNotification(AHNotification.justText("${++mainViewModel.badgeCount}"),
@@ -127,24 +132,59 @@ class MainActivity: DaggerAppCompatActivity(),
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        if (mainViewModel.currentPosition == 0) changeMenuVisibility(menu)
-        else changeMenuVisibility(menu, false)
+        changeMenuVisibility(menu, mainViewModel.currentPosition == 0)
 
         return true
     }
 
-    private fun changeMenuVisibility(menu: Menu?, show: Boolean = true) {
-        menu?.getItem(0)?.isVisible = show
+    private fun changeMenuVisibility(menu: Menu?, show: Boolean) {
+        menu?.apply {
+            getItem(0)?.isVisible = show
+            getItem(1)?.isVisible = show
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.tab_favorite, menu)
 
-        menu?.findItem(R.id.menuFavorite_undo)?.apply {
+        val searchViewItem = menu?.findItem(R.id.menuFavorite_search)
+        val searchView = (searchViewItem?.actionView as SearchView).apply {
+            maxWidth = Int.MAX_VALUE    // Need to position the delete icon to the right side when landscape.
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        }
+
+        bindSearchViewListener(searchView)
+        restoreSearchViewState(searchView, searchViewItem)
+
+        menu.findItem(R.id.menuFavorite_undo)?.apply {
             icon = badgeIconUtils.getDrawableWithBadge(mainViewModel.undoBadgeCount, R.drawable.ic_undo)
         }
 
         return true
+    }
+
+    private fun bindSearchViewListener(searchView: SearchView) {
+        disposable = RxSearchView.queryTextChanges(searchView)
+                .skipInitialValue()
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    mainViewModel.searchQuery = it
+                    viewPagerAdapter.favoriteQuoteFragment.submitSearchQuery(it)
+                }
+    }
+
+    private fun restoreSearchViewState(searchView: SearchView, searchViewItem: MenuItem?) {
+        mainViewModel.searchQuery.also {
+            if (it.isNotEmpty()) {
+                searchViewItem?.expandActionView()
+                searchView.apply {
+                    setQuery(it, false)
+                    clearFocus()
+                }
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId) {
@@ -161,6 +201,15 @@ class MainActivity: DaggerAppCompatActivity(),
         mainViewModel.unmarkDeleted(mainViewModel.undoBadgeCount--)
 
         invalidateOptionsMenu()
+    }
+
+    override fun onDestroy() {
+        disposable?.dispose()
+        super.onDestroy()
+    }
+
+    companion object {
+        const val KEY_UNDO_BADGE = "key_undo_badge"
     }
 
 }

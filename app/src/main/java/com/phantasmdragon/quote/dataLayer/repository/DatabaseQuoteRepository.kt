@@ -25,11 +25,14 @@ import com.phantasmdragon.quote.utilsLevel.databaseThread
 import com.phantasmdragon.quote.utilsLevel.getCorrectedAuthor
 import javax.inject.Inject
 
-class DatabaseQuoteRepository @Inject constructor(private val quoteDao: QuoteDao,
-                                                  private val authorDao: AuthorDao,
-                                                  private val resources: Resources) {
+class DatabaseQuoteRepository @Inject constructor(
+    private val quoteDao: QuoteDao,
+    private val authorDao: AuthorDao,
+    private val resources: Resources
+) {
 
-    fun getAllQuotes() = quoteDao.getAllQuotes()
+    fun getAllQuotes(searchQuery: String) =
+            if (searchQuery.isEmpty()) quoteDao.getAllQuotes() else quoteDao.getQuotesByQuery(searchQuery)
 
     /**
      * Basically, there is no chance that an author's name will be an empty string,
@@ -41,8 +44,7 @@ class DatabaseQuoteRepository @Inject constructor(private val quoteDao: QuoteDao
         val authorEntity = AuthorEntity(quote.getCorrectedAuthor(resources) ?: "")
         val authorId = authorDao.insert(authorEntity)
 
-        quoteDao.insert(QuoteEntity(authorId,
-                                    quote.quoteText))
+        quoteDao.insert(QuoteEntity(authorId, quote.quoteText))
     }
 
     fun markAsDeleted(id: Long?, deletedOrder: Int) = databaseThread {

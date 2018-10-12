@@ -3,20 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Implement the search view to the toolbar -->
-    <!--<item-->
-        <!--android:id="@+id/menuFavorite_search"-->
-        <!--android:orderInCategory="1"-->
-        <!--android:icon="@drawable/ic_search"-->
-        <!--android:title="@string/menu_search"-->
-        <!--app:showAsAction="collapseActionView|ifRoom"-->
-        <!--app:actionViewClass="android.support.v7.widget.SearchView" />-->
+    <item
+        android:id="@+id/menuFavorite_search"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_search"
+        android:title="@string/menu_search"
+        app:showAsAction="collapseActionView|always"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
 
     <item
         android:id="@+id/menuFavorite_undo"
         android:orderInCategory="2"
         android:icon="@drawable/ic_undo"
         android:title="@string/menu_undo"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 </menu>

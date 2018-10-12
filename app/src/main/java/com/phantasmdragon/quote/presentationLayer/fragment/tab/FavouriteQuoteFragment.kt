@@ -41,15 +41,9 @@ import kotlinx.android.synthetic.main.fragment_favourite.*
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class FavouriteQuoteFragment
-    : DaggerFragment(),
-      SwipeToDeleteCallback {
-
-    companion object {
-        fun instantiate(bundle: Bundle? = null): FavouriteQuoteFragment = FavouriteQuoteFragment().apply {
-            arguments = bundle
-        }
-    }
+class FavouriteQuoteFragment :
+    DaggerFragment(),
+    SwipeToDeleteCallback {
 
     @Inject lateinit var quoteRecyclerViewAdapter: QuoteRecyclerViewAdapter
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -118,6 +112,18 @@ class FavouriteQuoteFragment
                                                                         ItemTouchHelper.LEFT)
 
         ItemTouchHelper(swipeToDeleteItemTouchHelper).attachToRecyclerView(fragFavourite_recycler)
+    }
+
+    fun submitSearchQuery(searchQuery: CharSequence) {
+        val patternString = if (searchQuery.isNotEmpty()) String.format(getString(R.string.pattern_search_any), searchQuery) else searchQuery
+
+        favouriteQuoteViewModel.submitSearchQuery(patternString.toString())
+    }
+
+    companion object {
+        fun instantiate(bundle: Bundle? = null): FavouriteQuoteFragment = FavouriteQuoteFragment().apply {
+            arguments = bundle
+        }
     }
 
 }

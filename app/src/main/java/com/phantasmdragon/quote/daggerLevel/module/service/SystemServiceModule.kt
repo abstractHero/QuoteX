@@ -17,6 +17,7 @@ package com.phantasmdragon.quote.daggerLevel.module.service
 
 import android.app.AlarmManager
 import android.app.NotificationManager
+import android.app.SearchManager
 import android.content.Context
 import android.net.ConnectivityManager
 import android.view.LayoutInflater
@@ -43,5 +44,9 @@ class SystemServiceModule {
     @Provides
     @ApplicationScope
     fun provideNotificationManager(application: QuoteApplication) = application.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    @Provides
+    @ApplicationScope
+    fun provideSearchManager(application: QuoteApplication) = application.getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
 }

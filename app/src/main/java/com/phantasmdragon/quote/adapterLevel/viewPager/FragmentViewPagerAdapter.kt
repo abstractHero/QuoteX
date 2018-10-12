@@ -18,14 +18,16 @@ package com.phantasmdragon.quote.adapterLevel.viewPager
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.view.ViewGroup
 import com.phantasmdragon.quote.presentationLayer.fragment.tab.FavouriteQuoteFragment
 import com.phantasmdragon.quote.presentationLayer.fragment.tab.GetQuoteFragment
 import com.phantasmdragon.quote.presentationLayer.fragment.tab.SettingsFragment
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
-class FragmentViewPagerAdapter @Inject constructor(supporFragmentManager: FragmentManager)
-    : FragmentStatePagerAdapter(supporFragmentManager) {
+class FragmentViewPagerAdapter @Inject constructor(supporFragmentManager: FragmentManager) :
+    FragmentStatePagerAdapter(supporFragmentManager) {
+
+    lateinit var favoriteQuoteFragment: FavouriteQuoteFragment
 
     override fun getItem(position: Int): Fragment = when (position) {
         0 -> FavouriteQuoteFragment.instantiate()
@@ -35,6 +37,14 @@ class FragmentViewPagerAdapter @Inject constructor(supporFragmentManager: Fragme
     }
 
     override fun getCount() = 3
+
+    override fun setPrimaryItem(container: ViewGroup, position: Int, any: Any) {
+        if (!this::favoriteQuoteFragment.isInitialized && position == 0) {
+            favoriteQuoteFragment = any as FavouriteQuoteFragment
+        }
+
+        super.setPrimaryItem(container, position, any)
+    }
 
     fun getMiddleItem() = count.div(2)
 

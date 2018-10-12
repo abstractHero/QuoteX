@@ -1,9 +1,6 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -32,11 +29,18 @@ android {
     dataBinding {
         enabled = true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        pickFirst 'META-INF/proguard/androidx-annotations.pro'
+    }
 }
 
 ext {
-    support_version = '28.0.0-alpha3'
-    constraint_layout_version = '1.1.2'
+    support_version = '28.0.0'
+    constraint_layout_version = '1.1.3'
     junit_version = '4.12'
     runner_version = '1.0.2'
     espresso_version = '3.0.2'
@@ -49,6 +53,7 @@ ext {
     rxjava = '2.2.2'
     rxandroid = '2.1.0'
     rxkotlin = '2.3.0'
+    rxbinding = '2.2.0'
 
     bottom_nav_version = '2.1.0'
     cardswipe_version = '1.0.0'
@@ -84,6 +89,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$rxbinding"
 
     //Esthetic stuff
     implementation "com.aurelhubert:ahbottomnavigation:$bottom_nav_version"

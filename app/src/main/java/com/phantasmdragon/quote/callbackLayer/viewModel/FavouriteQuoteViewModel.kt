@@ -19,31 +19,36 @@ import android.arch.lifecycle.ViewModel
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import android.databinding.ObservableField
-import com.phantasmdragon.quote.dataLayer.repository.DatabaseQuoteRepository
+import com.phantasmdragon.quote.dataLayer.database.SearchableDataSourceFactory
 import javax.inject.Inject
 
-class FavouriteQuoteViewModel @Inject constructor(databaseQuoteRepository: DatabaseQuoteRepository)
-    : ViewModel() {
-
-    companion object {
-        private const val PAGE_SIZE = 30
-        private const val ENABLE_PLACEHOLDER = true
-    }
+class FavouriteQuoteViewModel @Inject constructor(private val searchableDataSourceFactory: SearchableDataSourceFactory) :
+    ViewModel() {
 
     /**
      * LiveData with the paged list implementation that observes the changes in the database.
      */
-    val quotes
-            = LivePagedListBuilder(databaseQuoteRepository.getAllQuotes(),
-                                   PagedList.Config.Builder()
-                                                   .setPageSize(PAGE_SIZE)
-                                                   .setEnablePlaceholders(ENABLE_PLACEHOLDER)
-                                                   .build())
-                                  .build()
+    val quotes =
+            LivePagedListBuilder(searchableDataSourceFactory,
+                                 PagedList.Config.Builder()
+                                                 .setPageSize(PAGE_SIZE)
+                                                 .setEnablePlaceholders(ENABLE_PLACEHOLDER)
+                                                 .build())
+                                 .build()
 
     /**
      * Used to show a message if there is no any quote in the list yet.
      */
     val isListEmpty = ObservableField<Boolean>(true)
+
+    fun submitSearchQuery(searchQuery: String) {
+        searchableDataSourceFactory.searchQuery = searchQuery
+        quotes.value?.dataSource?.invalidate()
+    }
+
+    companion object {
+        private const val PAGE_SIZE = 30
+        private const val ENABLE_PLACEHOLDER = true
+    }
 
 }

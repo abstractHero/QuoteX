@@ -19,6 +19,8 @@ import com.phantasmdragon.quote.adapterLevel.recyclerView.QuoteRecyclerViewAdapt
 import com.phantasmdragon.quote.adapterLevel.recyclerView.viewHolder.ViewHolderFactory
 import com.phantasmdragon.quote.callbackLayer.handler.ClickHandler
 import com.phantasmdragon.quote.daggerLevel.annotation.scope.FragmentScope
+import com.phantasmdragon.quote.dataLayer.database.SearchableDataSourceFactory
+import com.phantasmdragon.quote.dataLayer.repository.DatabaseQuoteRepository
 import dagger.Module
 import dagger.Provides
 
@@ -27,7 +29,12 @@ class FavouriteFragmentModule {
 
     @Provides
     @FragmentScope
-    fun provideAdapter(viewHolderFactory: ViewHolderFactory, clickHandler: ClickHandler)
-            = QuoteRecyclerViewAdapter(viewHolderFactory, clickHandler)
+    fun provideAdapter(viewHolderFactory: ViewHolderFactory, clickHandler: ClickHandler) =
+            QuoteRecyclerViewAdapter(viewHolderFactory, clickHandler)
+
+    @Provides
+    @FragmentScope
+    fun provideSearchableDataSourceFactory(databaseQuoteRepository: DatabaseQuoteRepository) =
+            SearchableDataSourceFactory(databaseQuoteRepository)
 
 }

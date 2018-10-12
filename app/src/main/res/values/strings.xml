@@ -6,6 +6,9 @@
     <string name="default_author_name">Unknown</string>
     <string name="default_quote_language" translatable="false">en</string>
 
+    <!-- Pattern -->
+    <string name="pattern_search_any" translatable="false">%%%1$s%%</string> <!-- The result of this is the string surrounded by the % sign. -->
+
     <!-- Tabs' names -->
     <string name="tab_favourite">Favorite</string>
     <string name="tab_get_quote">Get a quote</string>
@@ -54,12 +57,7 @@
     <string name="settings_key_quote_language" translatable="false">key_quote_language</string>
 
     <!--    Urls -->
-    <string name="settings_git_url">https://github.com/abstractHero/QuoteX</string>
-
-    <!-- For using in other resources -->
-    <string name="res_minutes">minutes</string>
-    <string name="res_hour">hour</string>
-    <string name="res_hours">hours</string>
+    <string name="settings_git_url" translatable="false">https://github.com/abstractHero/QuoteX</string>
 
     <!-- Notification channels -->
     <string name="notification_channel_quotes">Quote notification channel</string>

@@ -32,6 +32,13 @@ interface QuoteDao {
                     WHERE isDeleted = 0""")
     fun getAllQuotes(): DataSource.Factory<Int, Quote>
 
+    @Query("""SELECT Quotes.id AS quoteId, Quotes.quoteText, Authors.name AS quoteAuthor
+                    FROM Quotes
+                    INNER JOIN Authors ON Quotes.authorId = Authors.id
+                    WHERE isDeleted = 0 AND (Quotes.quoteText LIKE :searchQuery OR
+                                             Authors.name LIKE :searchQuery)""")
+    fun getQuotesByQuery(searchQuery: String): DataSource.Factory<Int, Quote>
+
     @Insert(onConflict = REPLACE)
     fun insert(quoteEntity: QuoteEntity): Long
 

@@ -23,12 +23,14 @@ import com.phantasmdragon.quote.presentationLayer.acitvity.MainActivity
 import com.phantasmdragon.quote.utilsLevel.edit
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val databaseQuoteRepository: DatabaseQuoteRepository,
-                                        private val sharedPreferences: SharedPreferences)
-    : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val databaseQuoteRepository: DatabaseQuoteRepository,
+    private val sharedPreferences: SharedPreferences
+) : ViewModel() {
 
     var currentPosition = -1
     var badgeCount = 0
+    var searchQuery: CharSequence = ""
 
     /**
      * The value is stored in the file.
