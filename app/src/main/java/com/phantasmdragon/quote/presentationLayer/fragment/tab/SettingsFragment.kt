@@ -85,7 +85,8 @@ class SettingsFragment :
         workManager.enqueue(periodicWork)
     }
 
-    private fun getChosenInterval() = sharedPreferences.getLong(getString(R.string.settings_key_interval), PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS)
+    private fun getChosenInterval() =
+            sharedPreferences.getString(getString(R.string.settings_key_interval), null)?.toLong() ?: PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
