@@ -1,7 +1,7 @@
 # About
 The application was written in order to show how new architecture components work and interact with each other.
 
-Inspired by [SpaceX](https://www.spacex.com/).
+Inspired by [SpaceX](https://www.spacex.com/) :milky_way:
 
 ### Architecture components
   - [Room](https://developer.android.com/topic/libraries/architecture/room)
@@ -16,11 +16,16 @@ Inspired by [SpaceX](https://www.spacex.com/).
 # Demo
 ![Demo](https://user-images.githubusercontent.com/20317931/46438444-8ebad280-c766-11e8-83b7-78ac8be6df52.gif)
 
+__Search by the favorite list using [RxBinding](https://github.com/JakeWharton/RxBinding) (since 1.0.0):__
+
+![Search demo](https://user-images.githubusercontent.com/20317931/46870122-71f15f80-ce36-11e8-83f4-1e5b540c483e.gif)
+
 # TODO
-- [ ] Search by the list.
+- [x] Search by the favorite list :mag:
+- [ ] Highlight searched text :flashlight:
 
 # Links
-Pictures:
+:clap: Pictures:
   * [Heart](https://www.iconfinder.com/icons/2246820/heart_instagram_like_notification_icon)
   * [X icon](https://www.iconfinder.com/icons/1553096/alphabet_letter_letters_red_x_icon)
   * [SpaceX icons](https://www.iconfinder.com/iconsets/free-falcon-heavy-demo-mission-1)
