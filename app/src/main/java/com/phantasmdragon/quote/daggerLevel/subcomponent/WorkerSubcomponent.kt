@@ -23,6 +23,6 @@ import dagger.android.AndroidInjector
 interface WorkerSubcomponent : AndroidInjector<NotificationWorker> {
 
     @Subcomponent.Builder
-    abstract class Builder: AndroidInjector.Builder<NotificationWorker>()
+    abstract class Builder : AndroidInjector.Builder<NotificationWorker>()
 
 }

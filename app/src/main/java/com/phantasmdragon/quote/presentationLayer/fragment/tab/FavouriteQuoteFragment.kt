@@ -100,8 +100,7 @@ class FavouriteQuoteFragment :
                                                                    false)
         fragFavourite_recycler.adapter = quoteRecyclerViewAdapter
         fragFavourite_recycler.itemAnimator = DefaultItemAnimator()
-        fragFavourite_recycler.addItemDecoration(DividerItemDecoration(context,
-                                                                       DividerItemDecoration.VERTICAL))
+        fragFavourite_recycler.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         initItemTouchHelper()
     }

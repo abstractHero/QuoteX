@@ -55,11 +55,11 @@ class MainActivity :
     @Inject lateinit var searchManager: SearchManager
 
     private lateinit var mainViewModel: MainViewModel
+
     private var disposable: Disposable? = null
 
     override fun onLike(quote: Quote) {
-        actMain_bottomNav.setNotification(AHNotification.justText("${++mainViewModel.badgeCount}"),
-                                          0)
+        actMain_bottomNav.setNotification(AHNotification.justText("${++mainViewModel.badgeCount}"), 0)
 
         mainViewModel.insert(quote)
     }

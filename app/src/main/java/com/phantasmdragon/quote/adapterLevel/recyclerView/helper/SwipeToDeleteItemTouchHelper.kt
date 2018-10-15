@@ -54,7 +54,6 @@ class SwipeToDeleteItemTouchHelper(
         actionState: Int,
         isCurrentlyActive: Boolean
     ) {
-
         getDefaultUIUtil().onDraw(
             canvas,
             recyclerView,
@@ -63,7 +62,6 @@ class SwipeToDeleteItemTouchHelper(
             actionState,
             isCurrentlyActive
         )
-
     }
 
     override fun onChildDrawOver(
@@ -74,7 +72,6 @@ class SwipeToDeleteItemTouchHelper(
         actionState: Int,
         isCurrentlyActive: Boolean
     ) {
-
         getDefaultUIUtil().onDrawOver(
             canvas,
             recyclerView,
@@ -83,7 +80,6 @@ class SwipeToDeleteItemTouchHelper(
             actionState,
             isCurrentlyActive
         )
-
     }
 
     private fun getForegroundView(viewHolder: RecyclerView.ViewHolder?) = getQuoteViewHolder(viewHolder).binding.itemQuoteForegroundView

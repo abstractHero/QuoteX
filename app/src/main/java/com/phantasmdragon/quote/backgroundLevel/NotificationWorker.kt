@@ -92,11 +92,11 @@ class NotificationWorker(
     /**
      * I know it's like too much for just a simple observer, but let's say it's created for studying purposes :D
      */
-    private inline fun <reified T: Observable> T.addOnPropertyChangedListener(crossinline callback: (T) -> Unit)
-            = object : Observable.OnPropertyChangedCallback() {
-        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-            callback(sender as T)
-        }
+    private inline fun <reified T: Observable> T.addOnPropertyChangedListener(crossinline callback: (T) -> Unit) =
+            object : Observable.OnPropertyChangedCallback() {
+                override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                    callback(sender as T)
+                }
     }.also {
         addOnPropertyChangedCallback(it)
     }.let {
