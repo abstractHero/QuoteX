@@ -19,8 +19,6 @@ import android.content.Context
 import android.content.res.Resources
 import android.databinding.Observable
 import androidx.work.Worker
-import androidx.work.Worker.Result.FAILURE
-import androidx.work.Worker.Result.SUCCESS
 import androidx.work.WorkerParameters
 import com.phantasmdragon.quote.daggerLevel.custom.AndroidWorkerInjection
 import com.phantasmdragon.quote.dataLayer.json.Quote
@@ -28,6 +26,7 @@ import com.phantasmdragon.quote.networkLayer.repository.QuoteWorkerRepository
 import com.phantasmdragon.quote.utilsLevel.Constant
 import com.phantasmdragon.quote.utilsLevel.NotificationHelper
 import com.phantasmdragon.quote.utilsLevel.getCorrectedAuthor
+import io.reactivex.disposables.Disposable
 import io.reactivex.disposables.Disposables
 import javax.inject.Inject
 
@@ -42,9 +41,10 @@ class NotificationWorker(
 
     private lateinit var queryResult: Result
 
+    private var disposable: Disposable? = null
+
     override fun doWork(): Result {
         AndroidWorkerInjection.inject(this)
-        quoteWorkerRepository.getQuote()
 
         return getOperationResult()
     }
@@ -61,32 +61,42 @@ class NotificationWorker(
      * For more info see: https://stackoverflow.com/a/52605503/10342414.
      */
     private fun getOperationResult(): Result {
+        disposable = quoteWorkerRepository.queryState.addOnPropertyChangedListener { handleQueryState(it.get()) }
 
-        val onProperyChangedListener = quoteWorkerRepository.queryState.addOnPropertyChangedListener {
-            if (it.get() == Constant.QueryState.DONE) {
+        quoteWorkerRepository.getQuote()
 
+        while (!this::queryResult.isInitialized) {
+
+        }
+
+        dispose()
+
+        return queryResult
+    }
+
+    private val handleQueryState: (Constant.QueryState?) -> Unit = handler@{
+        when (it) {
+            Constant.QueryState.DONE -> {
                 val quote = quoteWorkerRepository.quote.apply {
                     this?.quoteAuthor = this?.getCorrectedAuthor(res)
                 }
 
                 sendNotification(quote)
 
-                queryResult = SUCCESS
-            } else {
-                queryResult = FAILURE
+                queryResult = Result.SUCCESS
             }
+            Constant.QueryState.PROCESS -> return@handler
+            else -> queryResult = Result.RETRY
         }
-
-        while (!this::queryResult.isInitialized) {}
-
-        onProperyChangedListener.dispose()
-        quoteWorkerRepository.dispose()
-
-        return queryResult
     }
 
     private fun sendNotification(quote: Quote?) {
         notificationHelper.notify(QUOTE_NOTIFICATION_ID, notificationHelper.getQuoteNotification(quote))
+    }
+
+    private fun dispose() {
+        disposable?.dispose()
+        quoteWorkerRepository.dispose()
     }
 
     /**
