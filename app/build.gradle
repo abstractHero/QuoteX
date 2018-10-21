@@ -21,8 +21,14 @@ android {
         }
     }
     buildTypes {
+        debug {
+            minifyEnabled true
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -48,7 +54,7 @@ ext {
     lifecycle_version = '1.1.1'
     room_version = '1.1.1'
     paging_version = "1.0.1"
-    workmanager_version = '1.0.0-alpha09'
+    workmanager_version = '1.0.0-alpha10'
 
     rxjava = '2.2.2'
     rxandroid = '2.1.0'
@@ -61,7 +67,7 @@ ext {
     dagger_version = '2.16'
     retrofit_version = '2.4.0'
     okhttp3_version = '3.10.0'
-    glide_version = '4.7.1'
+    glide_version = '4.8.0'
 }
 
 dependencies {
